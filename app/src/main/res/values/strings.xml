@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">WorkProtection</string>
+    <string name="tests_button">Проверка знаний</string>
+    <string name="briefings_button">Инструктажи</string>
+    <string name="blitz_button">Памятки</string>
 </resources>
