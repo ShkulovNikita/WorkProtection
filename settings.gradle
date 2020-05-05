@@ -1,0 +1,2 @@
+rootProject.name='WorkProtection'
+include ':app'
