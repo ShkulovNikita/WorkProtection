@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/authorization_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/tests_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:height="70dp"
+        android:width="220dp"
+        android:text="@string/tests_button"
+        android:layout_centerInParent="true"
+        android:onClick="onClickAuth">
+    </Button>
+
+    <Button
+        android:id="@+id/briefings_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:height="70dp"
+        android:width="220dp"
+        android:text="@string/briefings_button"
+        android:layout_above="@id/tests_button"
+        android:layout_alignLeft="@id/tests_button">
+    </Button>
+
+    <Button
+        android:id="@+id/blitz_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:height="70dp"
+        android:width="220dp"
+        android:text="@string/blitz_button"
+        android:layout_below="@id/tests_button"
+        android:layout_alignLeft="@id/tests_button">
+    </Button>
+</RelativeLayout>

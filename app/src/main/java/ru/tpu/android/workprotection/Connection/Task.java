@@ -1,10 +1,9 @@
-package ru.tpu.android.workprotection;
+package ru.tpu.android.workprotection.Connection;
 
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Process;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
 
@@ -54,5 +53,19 @@ public abstract class Task<T> implements Runnable {
     //зануление обсервера
     public final void unregisterObserver() {
         observer = null;
+    }
+
+    //редактирование ответа от API
+    public String editResponse(String response) {
+        String result = response;
+
+        //удаление лишних кавычек
+        result = result.substring(1);
+        result = result.substring(0, result.length() - 1);
+
+        //удаление лишних слэшей
+        result = result.replaceAll("\\\\", "");
+
+        return result;
     }
 }
