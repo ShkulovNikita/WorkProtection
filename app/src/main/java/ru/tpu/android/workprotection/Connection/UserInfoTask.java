@@ -44,7 +44,7 @@ public class UserInfoTask extends Task<UserInfo> {
     @Override
     @WorkerThread
     protected UserInfo executeInBackground() throws Exception {
-        String response = search("http://192.168.1.28:45455/api/authorization/" + AuthorizationActivity.userID);
+        String response = search( AuthorizationActivity.CONNECTION_URL + "authorization/" + AuthorizationActivity.userID);
         return parseSearch(response);
     }
 
@@ -73,24 +73,27 @@ public class UserInfoTask extends Task<UserInfo> {
 
         UserInfo userInfo = new UserInfo();
 
-        try {
-            //парсинг строки в JSON
-            JsonParser parser = new JsonParser();
-            JsonElement jsonTree = parser.parse(response);
+        if (!response.equals("Пользователь не найден")) {
+            try {
+                //парсинг строки в JSON
+                JsonParser parser = new JsonParser();
+                JsonElement jsonTree = parser.parse(response);
 
-            //преобразование дерева в объект для возможности получения значений полей
-            JsonObject jsonObject = jsonTree.getAsJsonObject();
+                //преобразование дерева в объект для возможности получения значений полей
+                JsonObject jsonObject = jsonTree.getAsJsonObject();
 
-            //получение значений полей экземпляра класса UserInfo
-            userInfo.setId(jsonObject.get("Id").getAsString());
-            userInfo.setSurname(jsonObject.get("Surname").getAsString());
-            userInfo.setName(jsonObject.get("Name").getAsString());
-            userInfo.setPatronymic(jsonObject.get("Patronymic").getAsString());
-            userInfo.setProfession(jsonObject.get("Profession").getAsString());
-        } catch (Exception ex) {
-            ex.printStackTrace();
+                //получение значений полей экземпляра класса UserInfo
+                userInfo.setId(jsonObject.get("Id").getAsString());
+                userInfo.setSurname(jsonObject.get("Surname").getAsString());
+                userInfo.setName(jsonObject.get("Name").getAsString());
+                userInfo.setPatronymic(jsonObject.get("Patronymic").getAsString());
+                userInfo.setProfession(jsonObject.get("Profession").getAsString());
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            userInfo.setId("Неверный табельный номер");
         }
-
         return userInfo;
     }
 }

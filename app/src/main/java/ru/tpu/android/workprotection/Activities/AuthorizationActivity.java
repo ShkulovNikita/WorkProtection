@@ -8,6 +8,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -20,14 +21,19 @@ import java.util.concurrent.Executors;
 import ru.tpu.android.workprotection.Connection.Observer;
 import ru.tpu.android.workprotection.Connection.Task;
 import ru.tpu.android.workprotection.Connection.UserInfoTask;
+import ru.tpu.android.workprotection.Models.DataStore;
 import ru.tpu.android.workprotection.Models.UserInfo;
 import ru.tpu.android.workprotection.R;
 
 public class AuthorizationActivity extends AppCompatActivity {
+    //строка подключения к API
+    static public final String CONNECTION_URL = "http://192.168.1.28:45455/api/";
 
-    static final String CONNECTION_URL = "http://192.168.1.28:45455/api/";
-    
+    //табельный номер, вводимый пользователем
     static public String userID = "";
+
+    //
+    static DataStore dataStore;
 
     //пул потоков
     private static Executor threadExecutor = Executors.newCachedThreadPool();
@@ -43,7 +49,8 @@ public class AuthorizationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authorization);
-
+        //блокировка положения экрана для данной активити
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         task = new UserInfoTask(observer);
     }
 
@@ -59,17 +66,24 @@ public class AuthorizationActivity extends AppCompatActivity {
     private Observer<UserInfo> observer = new Observer<UserInfo>() {
         @Override
         public void onLoading(@NonNull Task<UserInfo> task) {
-            /*ConstraintLayout layout = findViewById(R.id.auth_layout);
-            progressBar = new ProgressBar(AuthorizationActivity.this, null, android.R.attr.progressBarStyleLarge);
-            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(100, 100);
-            params.addRule(RelativeLayout.CENTER_IN_PARENT);
-            layout.addView(progressBar, params);*/
             progressBar = (ProgressBar) findViewById(R.id.progress_bar);
             progressBar.setVisibility(View.VISIBLE);
         }
 
         @Override
         public void onSuccess(@NonNull Task<UserInfo> task, @Nullable UserInfo data) {
+            dataStore.setUserInfo(data);
+            if (dataStore.getUserInfo().getId() != null) {
+                if (dataStore.getUserInfo().getId().equals("Неверный табельный номер"))
+                    getTextField().setText(dataStore.getUserInfo().getId());
+                else {
+                    Intent intent = new Intent(AuthorizationActivity.this, MenuActivity.class);
+                    intent.putExtra(DataStore.class.getSimpleName(), dataStore);
+                    startActivity(intent);
+                }
+            } else {
+                getTextField().setText("Произошла ошибка");
+            }
             progressBar.setVisibility(View.GONE);
         }
 
@@ -87,7 +101,11 @@ public class AuthorizationActivity extends AppCompatActivity {
     //нажатие на кнопку авторизации
     public void onClickAuth(View view) {
         userID = getTextField().getText().toString();
-        search();
+        try {
+            search();
+        } catch (Exception ex) {
+            getTextField().setText("Произошла ошибка");
+        }
     }
 
     //функция получения текста из поля ввода
