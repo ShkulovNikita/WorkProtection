@@ -59,11 +59,12 @@ public class AuthorizationActivity extends AppCompatActivity {
     private Observer<UserInfo> observer = new Observer<UserInfo>() {
         @Override
         public void onLoading(@NonNull Task<UserInfo> task) {
-            ConstraintLayout layout = findViewById(R.id.auth_layout);
+            /*ConstraintLayout layout = findViewById(R.id.auth_layout);
             progressBar = new ProgressBar(AuthorizationActivity.this, null, android.R.attr.progressBarStyleLarge);
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(100, 100);
             params.addRule(RelativeLayout.CENTER_IN_PARENT);
-            layout.addView(progressBar, params);
+            layout.addView(progressBar, params);*/
+            progressBar = (ProgressBar) findViewById(R.id.progress_bar);
             progressBar.setVisibility(View.VISIBLE);
         }
 
