@@ -47,19 +47,27 @@ public class AuthorizationActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_authorization);
-        //блокировка положения экрана для данной активити
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        //обработка ошибки, возникшей в следующей активити
-        Bundle arguments = getIntent().getExtras();
-        if (arguments!=null) {
-            String error = arguments.getString("Error");
-            if (error.equals("Произошла ошибка")) {
-                getTextField().setText(error);
+        try {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_authorization);
+            //блокировка положения экрана для данной активити
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            //обработка ошибки, возникшей в следующей активити
+            Bundle arguments = getIntent().getExtras();
+            if (arguments!=null) {
+                String error = arguments.getString("Error");
+                if (error != null) {
+                    if (error.equals("Произошла ошибка")) {
+                        getTextField().setText(error);
+                    }
+                }
             }
+            task = new UserInfoTask(observer);
+        } catch (Exception ex) {
+            getTextField().setText(ex.toString());
+            ex.printStackTrace();
         }
-        task = new UserInfoTask(observer);
+
     }
 
     @Override
