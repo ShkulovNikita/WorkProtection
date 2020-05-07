@@ -101,7 +101,7 @@ public class BriefingsInfoTask extends Task<BriefingsInfo> {
                 briefingsInfo.setPassed(gson.fromJson(jsonObject.getAsJsonArray("Passed"), boolean[].class));
             } catch (Exception ex) {
                 String[] resp = new String[1];
-                resp[0] = response;
+                resp[0] = "Произошла ошибка";
                 briefingsInfo.setId(resp);
             }
         }
