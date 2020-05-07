@@ -67,7 +67,6 @@ public class BriefingsInfoTask extends Task<BriefingsInfo> {
         if (response.code() != 200) {
             throw new Exception("api returned unexpected http code: " + response.code());
         }
-
         return response.body().string();
     }
 
