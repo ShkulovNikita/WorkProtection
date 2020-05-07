@@ -7,6 +7,10 @@ import android.os.Process;
 import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public abstract class Task<T> implements Runnable {
     private Observer<T> observer;
 
@@ -67,5 +71,25 @@ public abstract class Task<T> implements Runnable {
         result = result.replaceAll("\\\\", "");
 
         return result;
+    }
+
+    //конвертация строк в даты
+    public Date[] stringsToDates(String[] rawDates) {
+        Date[] dates = new Date[rawDates.length];
+
+        for (int i = 0; i<rawDates.length;i++)
+        {
+            //удаление лишних чисел (времени в минутах, часах и секундах)
+            rawDates[i] = rawDates[i].substring(0, rawDates[i].length() - 8);
+            rawDates[i] = rawDates[i].replaceAll("\\.", "/");
+            try {
+                dates[i] = new SimpleDateFormat("dd/MM/yyyy").parse(rawDates[i]);
+            } catch (ParseException ex) {
+                Date dateObj = new Date();
+                dates[i] = dateObj;
+            }
+        }
+
+        return dates;
     }
 }
