@@ -32,7 +32,7 @@ public class AuthorizationActivity extends AppCompatActivity {
     //табельный номер, вводимый пользователем
     static public String userID = "";
 
-    //
+    //объект для хранения и передачи данных между активити
     static DataStore dataStore;
 
     //пул потоков
@@ -51,6 +51,14 @@ public class AuthorizationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_authorization);
         //блокировка положения экрана для данной активити
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        //обработка ошибки, возникшей в следующей активити
+        Bundle arguments = getIntent().getExtras();
+        if (arguments!=null) {
+            String error = arguments.getString("Error");
+            if (error.equals("Произошла ошибка")) {
+                getTextField().setText(error);
+            }
+        }
         task = new UserInfoTask(observer);
     }
 
@@ -72,6 +80,7 @@ public class AuthorizationActivity extends AppCompatActivity {
 
         @Override
         public void onSuccess(@NonNull Task<UserInfo> task, @Nullable UserInfo data) {
+            dataStore = new DataStore();
             dataStore.setUserInfo(data);
             if (dataStore.getUserInfo().getId() != null) {
                 if (dataStore.getUserInfo().getId().equals("Неверный табельный номер"))

@@ -12,8 +12,7 @@
         android:height="70dp"
         android:width="220dp"
         android:text="@string/tests_button"
-        android:layout_centerInParent="true"
-        android:onClick="onClickAuth">
+        android:layout_centerInParent="true">
     </Button>
 
     <Button

@@ -7,6 +7,9 @@ public class DataStore implements Serializable {
     private UserInfo userInfo;
     private String userPhoto;
 
+    public DataStore() {
+    }
+
     public DataStore(UserInfo userInfo, String userPhoto) {
         this.userInfo = userInfo;
         this.userPhoto = userPhoto;
