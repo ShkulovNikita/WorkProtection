@@ -12,7 +12,8 @@
         android:height="70dp"
         android:width="220dp"
         android:text="@string/tests_button"
-        android:layout_centerInParent="true">
+        android:layout_centerInParent="true"
+        android:onClick="onClickTests">
     </Button>
 
     <Button
@@ -23,7 +24,8 @@
         android:width="220dp"
         android:text="@string/briefings_button"
         android:layout_above="@id/tests_button"
-        android:layout_alignLeft="@id/tests_button">
+        android:layout_alignLeft="@id/tests_button"
+        android:onClick="onClickBriefings">
     </Button>
 
     <Button
@@ -34,6 +36,7 @@
         android:width="220dp"
         android:text="@string/blitz_button"
         android:layout_below="@id/tests_button"
-        android:layout_alignLeft="@id/tests_button">
+        android:layout_alignLeft="@id/tests_button"
+        android:onClick="onClickBlitz">
     </Button>
 </RelativeLayout>

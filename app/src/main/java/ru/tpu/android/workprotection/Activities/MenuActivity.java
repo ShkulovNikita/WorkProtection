@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,5 +40,20 @@ public class MenuActivity extends AppCompatActivity {
             intent.putExtra("Error", "Произошла ошибка");
             startActivity(intent);
         }
+    }
+
+    //просмотр тестов
+    public void onClickTests(View view) {
+
+    }
+
+    //просмотр инструктажей
+    public void onClickBriefings(View view) {
+
+    }
+
+    //просмотр памяток
+    public void onClickBlitz(View view) {
+
     }
 }
