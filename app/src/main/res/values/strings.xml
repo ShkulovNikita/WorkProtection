@@ -3,4 +3,8 @@
     <string name="tests_button">Проверка знаний</string>
     <string name="briefings_button">Инструктажи</string>
     <string name="blitz_button">Памятки</string>
+    <string name="nav_menu">Главная</string>
+    <string name="nav_return">Вернуться в меню</string>
+    <string name="nav_current_documents">Текущие документы</string>
+    <string name="nav_logout">Выход</string>
 </resources>
