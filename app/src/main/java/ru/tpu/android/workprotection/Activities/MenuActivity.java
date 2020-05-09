@@ -17,6 +17,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
+import ru.tpu.android.workprotection.Auxiliary.Transition;
 import ru.tpu.android.workprotection.Connection.UserInfoTask;
 import ru.tpu.android.workprotection.Models.DataStore;
 import ru.tpu.android.workprotection.R;
@@ -31,9 +32,12 @@ public class MenuActivity extends AppCompatActivity
     //объект для хранения и передачи информации о пользователе
     static DataStore dataStore;
 
+    //создание активити
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //создание элементов интерфейса
         setContentView(R.layout.activity_menu);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -43,8 +47,10 @@ public class MenuActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
         //блокировка положения экрана для данной активити
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         //получение информации о пользователе
         try {
             Bundle arguments = getIntent().getExtras();
@@ -61,6 +67,7 @@ public class MenuActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+    //нажатие на кнопку "назад" смартфона
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -71,21 +78,17 @@ public class MenuActivity extends AppCompatActivity
         }
     }
 
+    //вставляет элементы меню на верхней панели
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -93,6 +96,7 @@ public class MenuActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    //обработка нажатий элементов меню
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -100,13 +104,13 @@ public class MenuActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_current) {
-            //do nothing
+            //ничего не делать: выбран элемент текущего активити
         } else if (id == R.id.nav_return_to_home) {
-            //returnToHome();
+            Transition.returnToHome(this, dataStore);
         } else if (id == R.id.nav_current_documents) {
-            //openDocumentsOnClick();
+            //список памяток
         } else if (id == R.id.nav_logout) {
-            //returnToAuthorization();
+            Transition.returnToAuthorization(this);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
