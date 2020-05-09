@@ -20,10 +20,12 @@
         <activity android:name=".Activities.AuthorizationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.MenuActivity"></activity>
+        <activity
+            android:name=".Activities.MenuActivity"
+            android:label="@string/title_activity_menu"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 </manifest>
