@@ -1,5 +1,7 @@
 package ru.tpu.android.workprotection.Connection;
 
+import android.os.Environment;
+
 import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
 
@@ -8,6 +10,13 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import org.json.JSONException;
+
+import java.io.BufferedInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLConnection;
 
 import ru.tpu.android.workprotection.Activities.AuthorizationActivity;
 import ru.tpu.android.workprotection.Models.UserInfo;
@@ -44,8 +53,49 @@ public class UserInfoTask extends Task<UserInfo> {
     @WorkerThread
     protected UserInfo executeInBackground() throws Exception {
         String response = search( AuthorizationActivity.CONNECTION_URL + "authorization/" + AuthorizationActivity.userID);
-        String photoResponse = search( AuthorizationActivity.CONNECTION_URL + "getphoto/" + AuthorizationActivity.userID);
-        return parseSearch(response, photoResponse);
+        UserInfo userInfo = parseSearch(response);
+        if (userInfo != null) {
+            if (!userInfo.getId().equals("Неверный табельный номер")) {
+                String photoResponse = searchPhoto( AuthorizationActivity.CONNECTION_URL + "getphoto/" + AuthorizationActivity.userID);
+                userInfo.setPhoto(photoResponse);
+            }
+        }
+        return userInfo;
+    }
+
+    private String searchPhoto(String query) throws Exception {
+        try {
+            URL url = new URL(query);
+
+            URLConnection conexion = url.openConnection();
+            conexion.connect();
+
+            InputStream input = new BufferedInputStream(url.openStream());
+
+            OutputStream output;
+
+            String fileName = "userPhoto.png";
+            output = new FileOutputStream(Environment
+                    .getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + fileName);
+
+            byte data[] = new byte[1024];
+
+            int count;
+            while (( count = input.read(data)) != -1) {
+                output.write(data, 0, count);
+            }
+
+            String filePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + fileName;
+
+            output.flush();
+            output.close();
+            input.close();
+
+            return filePath;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return "Произошла ошибка";
+        }
     }
 
     //запрос к API с возвращением тела ответа
@@ -67,7 +117,7 @@ public class UserInfoTask extends Task<UserInfo> {
     }
 
     //парсинг ответа
-    private UserInfo parseSearch(String response, String photoResponse) throws JSONException {
+    private UserInfo parseSearch(String response) throws JSONException {
         //удалить лишние символы из ответа от API
         response = editResponse(response);
 
@@ -88,7 +138,6 @@ public class UserInfoTask extends Task<UserInfo> {
                 userInfo.setName(jsonObject.get("Name").getAsString());
                 userInfo.setPatronymic(jsonObject.get("Patronymic").getAsString());
                 userInfo.setProfession(jsonObject.get("Profession").getAsString());
-                userInfo.setPhoto(FilesDownloader.getUserPhoto(photoResponse));
             } catch (Exception ex) {
                 userInfo.setId("Неверный табельный номер");
             }

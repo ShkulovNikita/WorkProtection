@@ -17,6 +17,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
+import ru.tpu.android.workprotection.Auxiliary.MenuFiller;
+import ru.tpu.android.workprotection.Auxiliary.Permissions;
 import ru.tpu.android.workprotection.Auxiliary.Transition;
 import ru.tpu.android.workprotection.Models.DataStore;
 import ru.tpu.android.workprotection.R;
@@ -56,6 +58,8 @@ public class MenuActivity extends AppCompatActivity
             if (arguments!=null) {
                 dataStore = (DataStore) arguments.getSerializable(DataStore.class.getSimpleName());
             }
+            Permissions.verifyStoragePermissions(this);
+            MenuFiller.FillMenu(this, dataStore.getUserInfo());
         } catch (Exception ex) {
             //в случае ошибки - возвращение назад к экрану авторизации
             Intent intent = new Intent(MenuActivity.this, AuthorizationActivity.class);
