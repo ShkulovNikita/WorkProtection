@@ -3,9 +3,7 @@ package ru.tpu.android.workprotection.Activities;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -13,11 +11,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+import ru.tpu.android.workprotection.Auxiliary.Permissions;
 import ru.tpu.android.workprotection.Connection.Observer;
 import ru.tpu.android.workprotection.Connection.Task;
 import ru.tpu.android.workprotection.Connection.UserInfoTask;
@@ -31,6 +29,9 @@ public class AuthorizationActivity extends AppCompatActivity {
 
     //табельный номер, вводимый пользователем
     static public String userID = "";
+
+    //фотография пользователя
+    static public String USER_PHOTO;
 
     //объект для хранения и передачи данных между активити
     static DataStore dataStore;
@@ -50,8 +51,10 @@ public class AuthorizationActivity extends AppCompatActivity {
         try {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_authorization);
+
             //блокировка положения экрана для данной активити
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
             //обработка ошибки, возникшей в следующей активити
             Bundle arguments = getIntent().getExtras();
             if (arguments!=null) {
@@ -62,12 +65,14 @@ public class AuthorizationActivity extends AppCompatActivity {
                     }
                 }
             }
+
+            //инициализация задач
             task = new UserInfoTask(observer);
         } catch (Exception ex) {
             getTextField().setText(ex.toString());
             ex.printStackTrace();
         }
-
+        Permissions.verifyStoragePermissions(this);
     }
 
     @Override
@@ -117,11 +122,13 @@ public class AuthorizationActivity extends AppCompatActivity {
 
     //нажатие на кнопку авторизации
     public void onClickAuth(View view) {
-        userID = getTextField().getText().toString();
-        try {
-            search();
-        } catch (Exception ex) {
-            getTextField().setText("Произошла ошибка");
+        if (Permissions.checkPermission(this)) {
+            userID = getTextField().getText().toString();
+            try {
+                search();
+            } catch (Exception ex) {
+                getTextField().setText("Произошла ошибка");
+            }
         }
     }
 

@@ -8,7 +8,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import ru.tpu.android.workprotection.Activities.AuthorizationActivity;
 import ru.tpu.android.workprotection.Models.UserInfo;
@@ -45,7 +44,8 @@ public class UserInfoTask extends Task<UserInfo> {
     @WorkerThread
     protected UserInfo executeInBackground() throws Exception {
         String response = search( AuthorizationActivity.CONNECTION_URL + "authorization/" + AuthorizationActivity.userID);
-        return parseSearch(response);
+        String photoResponse = search( AuthorizationActivity.CONNECTION_URL + "getphoto/" + AuthorizationActivity.userID);
+        return parseSearch(response, photoResponse);
     }
 
     //запрос к API с возвращением тела ответа
@@ -67,7 +67,7 @@ public class UserInfoTask extends Task<UserInfo> {
     }
 
     //парсинг ответа
-    private UserInfo parseSearch(String response) throws JSONException {
+    private UserInfo parseSearch(String response, String photoResponse) throws JSONException {
         //удалить лишние символы из ответа от API
         response = editResponse(response);
 
@@ -88,8 +88,9 @@ public class UserInfoTask extends Task<UserInfo> {
                 userInfo.setName(jsonObject.get("Name").getAsString());
                 userInfo.setPatronymic(jsonObject.get("Patronymic").getAsString());
                 userInfo.setProfession(jsonObject.get("Profession").getAsString());
+                userInfo.setPhoto(FilesDownloader.getUserPhoto(photoResponse));
             } catch (Exception ex) {
-                ex.printStackTrace();
+                userInfo.setId("Неверный табельный номер");
             }
         } else {
             userInfo.setId("Неверный табельный номер");

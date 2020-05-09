@@ -10,6 +10,7 @@ public class UserInfo implements Serializable {
     private String name;
     private String patronymic;
     private String profession;
+    private String photo;
 
     public UserInfo () {
     }
@@ -60,5 +61,13 @@ public class UserInfo implements Serializable {
 
     public void setProfession(String profession) {
         this.profession = profession;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 }

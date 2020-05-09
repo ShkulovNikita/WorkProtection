@@ -1,7 +1,6 @@
 package ru.tpu.android.workprotection.Models;
 
 import java.io.Serializable;
-import java.util.Date;
 
 //класс для хранения информации о конкретном тесте
 public class TestInfo implements Serializable {

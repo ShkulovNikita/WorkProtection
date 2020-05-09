@@ -18,7 +18,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.navigation.NavigationView;
 
 import ru.tpu.android.workprotection.Auxiliary.Transition;
-import ru.tpu.android.workprotection.Connection.UserInfoTask;
 import ru.tpu.android.workprotection.Models.DataStore;
 import ru.tpu.android.workprotection.R;
 
