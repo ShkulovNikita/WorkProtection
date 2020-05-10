@@ -19,6 +19,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import ru.tpu.android.workprotection.Activities.AuthorizationActivity;
+import ru.tpu.android.workprotection.Auxiliary.FilesDownloader;
 import ru.tpu.android.workprotection.Models.UserInfo;
 
 import okhttp3.OkHttpClient;
@@ -65,8 +66,8 @@ public class UserInfoTask extends Task<UserInfo> {
 
     private String searchPhoto(String query) throws Exception {
         try {
+            //установление соединения
             URL url = new URL(query);
-
             URLConnection conexion = url.openConnection();
             conexion.connect();
 
@@ -74,19 +75,19 @@ public class UserInfoTask extends Task<UserInfo> {
 
             OutputStream output;
 
+            //задание имени файла фотографии
             String fileName = "userPhoto.png";
+            //выбор места сохранения
             output = new FileOutputStream(Environment
                     .getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + fileName);
 
-            byte data[] = new byte[1024];
+            //сохранение файла
+            FilesDownloader.saveFileFromStream(input, output);
 
-            int count;
-            while (( count = input.read(data)) != -1) {
-                output.write(data, 0, count);
-            }
-
+            //получение пути до фотографии
             String filePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + fileName;
 
+            //закрытие потоков
             output.flush();
             output.close();
             input.close();
