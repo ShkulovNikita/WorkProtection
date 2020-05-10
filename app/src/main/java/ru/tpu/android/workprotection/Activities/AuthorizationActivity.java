@@ -69,6 +69,9 @@ public class AuthorizationActivity extends AppCompatActivity {
                 }
             }
 
+            //задание заголовка активити
+            this.setTitle(R.string.title_activity_authorization);
+
             //инициализация задач
             task = new UserInfoTask(observer);
         } catch (Exception ex) {

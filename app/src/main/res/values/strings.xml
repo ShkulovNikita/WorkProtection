@@ -1,40 +1,44 @@
 <resources>
+    <!--Название приложения-->
     <string name="app_name">WorkProtection</string>
+
+    <!--Кнопки-->
     <string name="tests_button">Проверка знаний</string>
     <string name="briefings_button">Инструктажи</string>
     <string name="blitz_button">Памятки</string>
+
+    <!--Технические строки-->
+    <string name="navigation_drawer_open">Открыть боковую панель</string>
+    <string name="navigation_drawer_close">Закрыть боковую панель</string>
+    <string name="action_settings">Настройки</string>
+
+    <!--Общие элементы боковой панели-->
     <string name="nav_menu">Главная</string>
     <string name="nav_return">Вернуться в меню</string>
     <string name="nav_current_documents">Текущие документы</string>
     <string name="nav_logout">Выход</string>
-    <string name="navigation_drawer_open">Открыть боковую панель</string>
-    <string name="navigation_drawer_close">Закрыть боковую панель</string>
-    <string name="action_settings">Настройки</string>
+
+    <!--Заполнители для боковой панели-->
     <string name="nav_header_desc">Заголовок навигации</string>
     <string name="nav_header_title">Имя пользователя</string>
     <string name="nav_header_subtitle">Должность</string>
 
-    <string name="nav_planned_briefing">Плановые инструктажи</string>
-    <string name="nav_briefing">Инструктаж</string>
-    <string name="nav_tests">Тесты</string>
-    <string name="nav_test_name">Тест</string>
-    <string name="nav_results">Результаты</string>
-    <string name="nav_list_of_documents">Список документов</string>
-    <string name="nav_document">Документ</string>
+    <!--Заголовки активити-->
+    <string name="title_activity_authorization">Авторизация</string>
+    <string name="title_activity_menu">Меню</string>
+    <string name="title_activity_current_documents">Текущие документы</string>
+    <string name="title_activity_briefings_list">Плановые инструктажи</string>
+    <string name="title_activity_read_briefing">Инструктаж</string>
+    <string name="title_activity_tests_list">Тесты</string>
+    <string name="title_activity_test">Тест</string>
+    <string name="title_activity_test_result">Результаты</string>
+    <string name="title_activity_read_blitz">Памятки</string>
 
+    <!--Технические строки меню-->
     <string name="menu_home">Главная</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="menu_tools">Tools</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
-    <string name="title_activity_menu">Меню</string>
-    <string name="title_activity_current_documents">Текущие документы</string>
-    <string name="title_activity_briefings_list">Плановые инструктажи</string>
-    <string name="title_activity_read_briefing">Инструктаж</string>
-    <string name="title_activity_read_document">Пожарная безопасность</string>
-    <string name="title_activity_tests_list">Тесты</string>
-    <string name="title_activity_test">Тест</string>
-    <string name="title_activity_test_result">Результаты</string>
-    <string name="title_activity_read_blitz">ReadBlitzActivity</string>
 </resources>
