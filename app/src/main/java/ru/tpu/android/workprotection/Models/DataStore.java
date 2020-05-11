@@ -6,6 +6,8 @@ import java.io.Serializable;
 public class DataStore implements Serializable {
     private UserInfo userInfo;
     private BriefingsInfo briefingsInfo;
+    private TestListInfo testListInfo;
+    private BlitzInfo blitzInfo;
 
     public DataStore() { }
 
@@ -23,5 +25,21 @@ public class DataStore implements Serializable {
 
     public void setBriefingsInfo(BriefingsInfo briefingsInfo) {
         this.briefingsInfo = briefingsInfo;
+    }
+
+    public BlitzInfo getBlitzInfo() {
+        return blitzInfo;
+    }
+
+    public void setBlitzInfo(BlitzInfo blitzInfo) {
+        this.blitzInfo = blitzInfo;
+    }
+
+    public TestListInfo getTestListInfo() {
+        return testListInfo;
+    }
+
+    public void setTestListInfo(TestListInfo testListInfo) {
+        this.testListInfo = testListInfo;
     }
 }

@@ -220,6 +220,13 @@ public class BriefingsListActivity extends AppCompatActivity
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //отписка обсервера
+        task.unregisterObserver();
+    }
+
     //вставляет элементы меню на верхней панели
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
