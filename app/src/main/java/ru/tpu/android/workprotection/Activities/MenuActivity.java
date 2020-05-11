@@ -48,6 +48,7 @@ public class MenuActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+        MenuFiller.setTitle(this, getString(R.string.title_activity_menu));
 
         //блокировка положения экрана для данной активити
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -55,16 +56,18 @@ public class MenuActivity extends AppCompatActivity
         //получение информации о пользователе
         try {
             Bundle arguments = getIntent().getExtras();
+
             if (arguments!=null) {
+                //обработка ошибки, возникшей в следующей активити
+                Transition.checkError(this, arguments);
+
                 dataStore = (DataStore) arguments.getSerializable(DataStore.class.getSimpleName());
             }
             Permissions.verifyStoragePermissions(this);
-            MenuFiller.FillMenu(this, dataStore.getUserInfo());
+            MenuFiller.fillMenu(this, dataStore.getUserInfo());
         } catch (Exception ex) {
             //в случае ошибки - возвращение назад к экрану авторизации
-            Intent intent = new Intent(MenuActivity.this, AuthorizationActivity.class);
-            intent.putExtra("Error", "Произошла ошибка");
-            startActivity(intent);
+            Transition.returnOnError(this, AuthorizationActivity.class, dataStore);
         }
 
         navigationView.setNavigationItemSelectedListener(this);
@@ -123,16 +126,16 @@ public class MenuActivity extends AppCompatActivity
 
     //просмотр тестов
     public void onClickTests(View view) {
-        Transition.returnOnError(this, AuthorizationActivity.class);
+        Transition.moveToActivity(this, TestsListActivity.class, dataStore);
     }
 
     //просмотр инструктажей
     public void onClickBriefings(View view) {
-
+        Transition.moveToActivity(this, BriefingsListActivity.class, dataStore);
     }
 
     //просмотр памяток
     public void onClickBlitz(View view) {
-
+        Transition.moveToActivity(this, BlitzListActivity.class, dataStore);
     }
 }

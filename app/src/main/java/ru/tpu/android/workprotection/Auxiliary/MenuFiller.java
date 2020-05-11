@@ -1,8 +1,11 @@
 package ru.tpu.android.workprotection.Auxiliary;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,8 +17,9 @@ import java.io.File;
 import ru.tpu.android.workprotection.Models.UserInfo;
 import ru.tpu.android.workprotection.R;
 
+//класс для заполнения боковой панели
 public class MenuFiller {
-    static public void FillMenu (Activity activity, UserInfo userInfo) {
+    static public void fillMenu (Activity activity, UserInfo userInfo) {
         Permissions.verifyStoragePermissions(activity);
 
         //получение боковой панели активити
@@ -42,5 +46,19 @@ public class MenuFiller {
                 ex.printStackTrace();
             }
         }
+    }
+
+    static public void setTitle (Activity activity, String title) {
+        //получение боковой панели
+        NavigationView navigationView = activity.findViewById(R.id.nav_view);
+
+        //получение меню
+        Menu menu = navigationView.getMenu();
+
+        //получение элемента меню, отображающего текущую активность
+        MenuItem nav_current = menu.findItem(R.id.nav_current);
+
+        //установить новый заголовок
+        nav_current.setTitle(title);
     }
 }

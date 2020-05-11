@@ -5,15 +5,9 @@ import java.io.Serializable;
 /*класс, объекты которого используются для передачи данных между активити*/
 public class DataStore implements Serializable {
     private UserInfo userInfo;
-    private String userPhoto;
+    private BriefingsInfo briefingsInfo;
 
-    public DataStore() {
-    }
-
-    public DataStore(UserInfo userInfo, String userPhoto) {
-        this.userInfo = userInfo;
-        this.userPhoto = userPhoto;
-    }
+    public DataStore() { }
 
     public UserInfo getUserInfo() {
         return userInfo;
@@ -23,11 +17,11 @@ public class DataStore implements Serializable {
         this.userInfo = userInfo;
     }
 
-    public String getUserPhoto() {
-        return userPhoto;
+    public BriefingsInfo getBriefingsInfo() {
+        return briefingsInfo;
     }
 
-    public void setUserPhoto(String userPhoto) {
-        this.userPhoto = userPhoto;
+    public void setBriefingsInfo(BriefingsInfo briefingsInfo) {
+        this.briefingsInfo = briefingsInfo;
     }
 }

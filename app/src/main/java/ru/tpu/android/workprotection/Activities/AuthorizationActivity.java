@@ -19,6 +19,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import ru.tpu.android.workprotection.Auxiliary.Permissions;
+import ru.tpu.android.workprotection.Auxiliary.Transition;
 import ru.tpu.android.workprotection.Connection.Observer;
 import ru.tpu.android.workprotection.Connection.Task;
 import ru.tpu.android.workprotection.Connection.UserInfoTask;
@@ -32,9 +33,6 @@ public class AuthorizationActivity extends AppCompatActivity {
 
     //табельный номер, вводимый пользователем
     static public String userID = "";
-
-    //фотография пользователя
-    static public String USER_PHOTO;
 
     //объект для хранения и передачи данных между активити
     static DataStore dataStore;
@@ -60,14 +58,7 @@ public class AuthorizationActivity extends AppCompatActivity {
 
             //обработка ошибки, возникшей в следующей активити
             Bundle arguments = getIntent().getExtras();
-            if (arguments!=null) {
-                String error = arguments.getString("Error");
-                if (error != null) {
-                    if (error.equals("Произошла ошибка")) {
-                        getTextField().setText(error);
-                    }
-                }
-            }
+            Transition.checkError(this, arguments);
 
             //задание заголовка активити
             this.setTitle(R.string.title_activity_authorization);
@@ -105,9 +96,7 @@ public class AuthorizationActivity extends AppCompatActivity {
                 if (dataStore.getUserInfo().getId().equals("Неверный табельный номер"))
                     getTextField().setText(dataStore.getUserInfo().getId());
                 else {
-                    Intent intent = new Intent(AuthorizationActivity.this, MenuActivity.class);
-                    intent.putExtra(DataStore.class.getSimpleName(), dataStore);
-                    startActivity(intent);
+                    Transition.moveToActivity(AuthorizationActivity.this, MenuActivity.class, dataStore);
                 }
             } else {
                 getTextField().setText("Произошла ошибка");
@@ -118,6 +107,7 @@ public class AuthorizationActivity extends AppCompatActivity {
         @Override
         public void onError(@NonNull Task<UserInfo> task, @NonNull Exception e) {
             progressBar.setVisibility(View.GONE);
+            getTextField().setText("Произошла ошибка");
         }
     };
 

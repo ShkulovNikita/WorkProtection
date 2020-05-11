@@ -15,6 +15,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import ru.tpu.android.workprotection.Activities.AuthorizationActivity;
+import ru.tpu.android.workprotection.Activities.BriefingsListActivity;
 import ru.tpu.android.workprotection.Models.BriefingsInfo;
 import ru.tpu.android.workprotection.Models.UserInfo;
 
@@ -44,7 +45,7 @@ public class BriefingsInfoTask extends Task<BriefingsInfo> {
     @Override
     @WorkerThread
     protected BriefingsInfo executeInBackground() throws Exception {
-        String response = search( AuthorizationActivity.CONNECTION_URL + "briefings/" + AuthorizationActivity.userID);
+        String response = search( AuthorizationActivity.CONNECTION_URL + "briefings/" + BriefingsListActivity.dataStore.getUserInfo().getId());
         return parseSearch(response);
     }
 
