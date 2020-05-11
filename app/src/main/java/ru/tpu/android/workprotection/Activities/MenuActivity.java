@@ -123,7 +123,7 @@ public class MenuActivity extends AppCompatActivity
 
     //просмотр тестов
     public void onClickTests(View view) {
-
+        Transition.returnOnError(this, AuthorizationActivity.class);
     }
 
     //просмотр инструктажей

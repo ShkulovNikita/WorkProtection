@@ -23,4 +23,11 @@ public class Transition {
         Intent intent = new Intent(context, AuthorizationActivity.class);
         context.startActivity(intent);
     }
+
+    //переход к другому экрану в результате ошибки
+    static public void returnOnError(Context context, Class nextActivity) {
+        Intent intent = new Intent(context, nextActivity);
+        intent.putExtra("Error", "Произошла ошибка");
+        context.startActivity(intent);
+    }
 }
