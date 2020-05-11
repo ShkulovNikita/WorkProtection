@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -257,7 +258,7 @@ public class BriefingsListActivity extends AppCompatActivity
         } else if (id == R.id.nav_return_to_home) {
             Transition.returnToHome(this, dataStore);
         } else if (id == R.id.nav_current_documents) {
-            //список памяток
+            Transition.moveToActivity(BriefingsListActivity.this, BlitzListActivity.class, dataStore);
         } else if (id == R.id.nav_logout) {
             Transition.returnToAuthorization(this);
         }

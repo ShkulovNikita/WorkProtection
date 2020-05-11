@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/blitz_item"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:background="#00BCD4"
+    android:orientation="horizontal"
+    android:onClick="onClick"
+    android:layout_marginBottom="10dp">
+
+    <TextView
+        android:id="@+id/textViewBlitz"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="..." />
+</LinearLayout>

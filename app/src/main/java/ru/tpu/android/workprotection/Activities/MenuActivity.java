@@ -114,7 +114,7 @@ public class MenuActivity extends AppCompatActivity
         } else if (id == R.id.nav_return_to_home) {
             Transition.returnToHome(this, dataStore);
         } else if (id == R.id.nav_current_documents) {
-            //список памяток
+            Transition.moveToActivity(MenuActivity.this, BlitzListActivity.class, dataStore);
         } else if (id == R.id.nav_logout) {
             Transition.returnToAuthorization(this);
         }

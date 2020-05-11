@@ -33,10 +33,8 @@ import ru.tpu.android.workprotection.Auxiliary.MenuFiller;
 import ru.tpu.android.workprotection.Auxiliary.NotFound;
 import ru.tpu.android.workprotection.Auxiliary.Permissions;
 import ru.tpu.android.workprotection.Auxiliary.Transition;
-import ru.tpu.android.workprotection.Connection.BriefingsInfoTask;
 import ru.tpu.android.workprotection.Connection.Observer;
 import ru.tpu.android.workprotection.Connection.Task;
-import ru.tpu.android.workprotection.Connection.TestInfoTask;
 import ru.tpu.android.workprotection.Connection.TestListInfoTask;
 import ru.tpu.android.workprotection.Models.DataStore;
 import ru.tpu.android.workprotection.Models.TestListInfo;
@@ -262,7 +260,7 @@ public class TestsListActivity extends AppCompatActivity
         } else if (id == R.id.nav_return_to_home) {
             Transition.returnToHome(this, dataStore);
         } else if (id == R.id.nav_current_documents) {
-            //список памяток
+            Transition.moveToActivity(TestsListActivity.this, BlitzListActivity.class, dataStore);
         } else if (id == R.id.nav_logout) {
             Transition.returnToAuthorization(this);
         }
