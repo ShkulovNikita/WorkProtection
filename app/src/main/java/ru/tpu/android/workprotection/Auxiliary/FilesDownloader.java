@@ -19,4 +19,18 @@ public class FilesDownloader {
             ex.printStackTrace();
         }
     }
+
+    //замена пробелов и точек в названии файла, чтобы оно могло корректно обрабатываться API
+    static public String deleteSpacesAndDots (String nameOfFile) {
+        String result = nameOfFile.replace(" ", "prob");
+        result = result.replace(".", "pnt");
+        return result;
+    }
+
+    //возвращение замененных символов
+    static public String returnSpacesAndDots (String nameOfFile) {
+        String result = nameOfFile.replace("pnt", ".");
+        result = result.replace("prob", " ");
+        return result;
+    }
 }
