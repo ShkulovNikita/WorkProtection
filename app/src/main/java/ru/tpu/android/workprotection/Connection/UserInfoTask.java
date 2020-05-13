@@ -64,6 +64,7 @@ public class UserInfoTask extends Task<UserInfo> {
         return userInfo;
     }
 
+    //TODO: обработка типа файла
     private String searchPhoto(String query) throws Exception {
         try {
             //установление соединения
