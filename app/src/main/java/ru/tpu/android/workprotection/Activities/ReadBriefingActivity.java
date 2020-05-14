@@ -20,7 +20,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.github.barteksc.pdfviewer.PDFView;
 import com.google.android.material.navigation.NavigationView;
 
+import org.json.JSONObject;
+
 import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.Executor;
@@ -32,6 +37,7 @@ import ru.tpu.android.workprotection.Auxiliary.TimeCounter;
 import ru.tpu.android.workprotection.Auxiliary.Transition;
 import ru.tpu.android.workprotection.Connection.DocumentDownloadTask;
 import ru.tpu.android.workprotection.Connection.Observer;
+import ru.tpu.android.workprotection.Connection.SendBriefingTask;
 import ru.tpu.android.workprotection.Connection.Task;
 import ru.tpu.android.workprotection.Models.DataStore;
 import ru.tpu.android.workprotection.R;
@@ -55,6 +61,12 @@ public class ReadBriefingActivity extends AppCompatActivity
 
     //задача для выполнения поиска с помощью API
     private DocumentDownloadTask task;
+
+    //задача отправки факта прохождения инструктажа на сервер
+    private SendBriefingTask briefingTask;
+
+    //JSON, отправляемый API при завершении инструктажа
+    public static String REQUEST;
 
     //переменные для отсчета времени чтения инструктажа
     int count = 0;
@@ -94,6 +106,7 @@ public class ReadBriefingActivity extends AppCompatActivity
             MenuFiller.fillMenu(this, dataStore.getUserInfo());
 
             task = new DocumentDownloadTask(observer);
+            briefingTask = new SendBriefingTask(briefingObserver);
             search();
         } catch (Exception ex) {
             //в случае ошибки - возвращение назад
@@ -112,6 +125,26 @@ public class ReadBriefingActivity extends AppCompatActivity
     }
 
     ProgressBar progressBar;
+
+    private Observer<Void> briefingObserver = new Observer<Void>() {
+        @Override
+        public void onLoading(@NonNull Task<Void> task) {
+            progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        public void onSuccess(@NonNull Task<Void> task, @Nullable Void data) {
+            progressBar.setVisibility(View.GONE);
+            Transition.moveToActivity(ReadBriefingActivity.this, BriefingsListActivity.class, dataStore);
+        }
+
+        @Override
+        public void onError(@NonNull Task<Void> task, @NonNull Exception e) {
+            progressBar.setVisibility(View.GONE);
+            Transition.returnOnError(ReadBriefingActivity.this, BriefingsListActivity.class, dataStore);
+        }
+    };
 
     private Observer<String> observer = new Observer<String>() {
         @Override
@@ -154,6 +187,11 @@ public class ReadBriefingActivity extends AppCompatActivity
     //обращение к API для получения документа
     private void search() {
         threadExecutor.execute(task);
+    }
+
+    //отправка данных на сервер
+    private void send() {
+        threadExecutor.execute(briefingTask);
     }
 
     //нажатие на кнопку "назад" смартфона
@@ -217,7 +255,35 @@ public class ReadBriefingActivity extends AppCompatActivity
     public void onClick (View view) {
         int elapsedTime = TimeCounter.stopTimer();
 
-        //здесь должна быть отправка инструктажа
-        Transition.moveToActivity(ReadBriefingActivity.this, TestsListActivity.class, dataStore);
+        //отправка факта прохождения инструктажа на сервер
+        REQUEST = prepareJSON(elapsedTime);
+        if (!REQUEST.equals("Произошла ошибка")) {
+            send();
+        } else {
+            Transition.returnOnError(ReadBriefingActivity.this, BriefingsListActivity.class, dataStore);
+        }
+    }
+
+    private String prepareJSON (int elapsedTime) {
+        String requestBody = "";
+
+        try {
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String date = df.format(new Date(System.currentTimeMillis()));
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("Date", date);
+            jsonObject.put("UserGuid", dataStore.getUserInfo().getId());
+            jsonObject.put("InstructionGuid", briefing_id);
+            jsonObject.put("StatusId", "3");
+            jsonObject.put("TimeSeconds", elapsedTime);
+            jsonObject.put("InstructionType", "1");
+            jsonObject.put("DeviceGuid", "FB8EA2C3-1ADA-480C-B888-A4DD706B6634");
+            requestBody = jsonObject.toString();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            requestBody = "Произошла ошибка";
+        }
+        return requestBody;
     }
 }
