@@ -6,7 +6,6 @@ import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
 
 import java.io.BufferedInputStream;
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -17,7 +16,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import ru.tpu.android.workprotection.Activities.AuthorizationActivity;
 import ru.tpu.android.workprotection.Auxiliary.FilesDownloader;
-import ru.tpu.android.workprotection.Models.UserInfo;
 
 public class DocumentDownloadTask extends Task<String> {
     private static OkHttpClient httpClient;
@@ -49,30 +47,32 @@ public class DocumentDownloadTask extends Task<String> {
         return response;
     }
 
-    private String search(String query) throws Exception {
+    private String search(String fileName) throws Exception {
         try {
-            query = FilesDownloader.deleteSpacesAndDots(query);
+            //удаление пробелов и точек для корректного вызова API
+            fileName = FilesDownloader.deleteSpacesAndDots(fileName);
 
             //установление соединения
-            URL url = new URL(query);
+            URL url = new URL(AuthorizationActivity.CONNECTION_URL + "getbriefingfile/" + fileName);
             URLConnection conexion = url.openConnection();
             conexion.connect();
 
+            //потоки для получения и сохранения файла
             InputStream input = new BufferedInputStream(url.openStream());
-
             OutputStream output;
 
-            //исправить, здесь сейчас URL целиком
-            String fileName = FilesDownloader.returnSpacesAndDots(query);
+            //возвращение имени файла к исходному виду
+            fileName = FilesDownloader.returnSpacesAndDots(fileName);
 
-            //выбор места сохранения
+            //место сохранения
             output = new FileOutputStream(Environment
-                    .getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + fileName);
+                    .getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + fileName + ".pdf");
 
+            //передача файла из входного потока в выходной
             FilesDownloader.saveFileFromStream(input, output);
 
-            //получение пути до файла
-            String filePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + fileName;
+            //получение пути до сохраненного файла
+            String filePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + fileName + ".pdf";
 
             //закрытие потоков
             output.flush();

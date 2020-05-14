@@ -207,7 +207,7 @@ public class TestsListActivity extends AppCompatActivity
         }
     }
 
-    //обращение к API для получения информации об инструктажах
+    //обращение к API для получения информации о тестах
     private void search() {
         threadExecutor.execute(task);
     }
