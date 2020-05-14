@@ -21,11 +21,14 @@ import com.github.barteksc.pdfviewer.PDFView;
 import com.google.android.material.navigation.NavigationView;
 
 import java.io.File;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import ru.tpu.android.workprotection.Auxiliary.MenuFiller;
 import ru.tpu.android.workprotection.Auxiliary.Permissions;
+import ru.tpu.android.workprotection.Auxiliary.TimeCounter;
 import ru.tpu.android.workprotection.Auxiliary.Transition;
 import ru.tpu.android.workprotection.Connection.DocumentDownloadTask;
 import ru.tpu.android.workprotection.Connection.Observer;
@@ -52,6 +55,11 @@ public class ReadBriefingActivity extends AppCompatActivity
 
     //задача для выполнения поиска с помощью API
     private DocumentDownloadTask task;
+
+    //переменные для отсчета времени чтения инструктажа
+    int count = 0;
+    Timer T;
+    int elapsedTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +101,14 @@ public class ReadBriefingActivity extends AppCompatActivity
         }
         navigationView.setNavigationItemSelectedListener(this);
         Permissions.verifyStoragePermissions(this);
+
+        //запуск таймера для отсчета времени
+        try {
+            TimeCounter.startTimer(ReadBriefingActivity.this);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            Transition.returnOnError(ReadBriefingActivity.this, BriefingsListActivity.class, dataStore);
+        }
     }
 
     ProgressBar progressBar;
@@ -199,6 +215,8 @@ public class ReadBriefingActivity extends AppCompatActivity
     }
 
     public void onClick (View view) {
+        int elapsedTime = TimeCounter.stopTimer();
+
         //здесь должна быть отправка инструктажа
         Transition.moveToActivity(ReadBriefingActivity.this, TestsListActivity.class, dataStore);
     }
