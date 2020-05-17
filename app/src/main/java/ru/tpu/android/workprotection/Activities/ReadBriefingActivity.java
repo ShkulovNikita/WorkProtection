@@ -27,7 +27,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -194,7 +193,6 @@ public class ReadBriefingActivity extends AppCompatActivity
         threadExecutor.execute(briefingTask);
     }
 
-    //нажатие на кнопку "назад" смартфона
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -210,6 +208,7 @@ public class ReadBriefingActivity extends AppCompatActivity
         super.onDestroy();
         //отписка обсервера
         task.unregisterObserver();
+        briefingTask.unregisterObserver();
     }
 
     //вставляет элементы меню на верхней панели

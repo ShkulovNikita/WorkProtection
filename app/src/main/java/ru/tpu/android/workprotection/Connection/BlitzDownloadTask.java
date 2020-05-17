@@ -15,10 +15,11 @@ import java.net.URLConnection;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import ru.tpu.android.workprotection.Activities.AuthorizationActivity;
+import ru.tpu.android.workprotection.Activities.ReadBlitzActivity;
 import ru.tpu.android.workprotection.Activities.ReadBriefingActivity;
 import ru.tpu.android.workprotection.Auxiliary.FilesDownloader;
 
-public class DocumentDownloadTask extends Task<String> {
+public class BlitzDownloadTask extends Task<String> {
     private static OkHttpClient httpClient;
 
     public static OkHttpClient getHttpClient() {
@@ -37,14 +38,14 @@ public class DocumentDownloadTask extends Task<String> {
         return httpClient;
     }
 
-    public DocumentDownloadTask(@Nullable Observer<String> observer) {
+    public BlitzDownloadTask(@Nullable Observer<String> observer) {
         super(observer);
     }
 
     @Override
     @WorkerThread
     protected String executeInBackground() throws Exception {
-        String response = search(ReadBriefingActivity.document_name);
+        String response = search(ReadBlitzActivity.document_name);
         return response;
     }
 
@@ -54,7 +55,7 @@ public class DocumentDownloadTask extends Task<String> {
             fileName = FilesDownloader.deleteSpacesAndDots(fileName);
 
             //установление соединения
-            URL url = new URL(AuthorizationActivity.CONNECTION_URL + "getbriefingfile/" + fileName);
+            URL url = new URL(AuthorizationActivity.CONNECTION_URL + "getinstructionblitzfile/" + fileName);
             URLConnection conexion = url.openConnection();
             conexion.connect();
 
