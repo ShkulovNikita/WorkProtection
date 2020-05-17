@@ -54,6 +54,7 @@ public class ReadBriefingActivity extends AppCompatActivity
     //данные для получения файла
     public static String briefing_id;
     public static String document_name;
+    public static String briefing_name;
 
     //пул потоков
     private static Executor threadExecutor = Executors.newCachedThreadPool();
@@ -101,6 +102,8 @@ public class ReadBriefingActivity extends AppCompatActivity
                 dataStore = (DataStore) arguments.getSerializable(DataStore.class.getSimpleName());
                 briefing_id = arguments.getString("briefing_id");
                 document_name = arguments.getString("document_name");
+                briefing_name = arguments.getString("briefing_name");
+                this.setTitle(briefing_name);
             }
             MenuFiller.fillMenu(this, dataStore.getUserInfo());
 

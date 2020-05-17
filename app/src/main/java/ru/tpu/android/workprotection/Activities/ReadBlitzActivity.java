@@ -46,6 +46,9 @@ public class ReadBlitzActivity extends AppCompatActivity
     //имя файла памятки
     public static String document_name;
 
+    //название памятки
+    public String blitz_name;
+
     //пул потоков
     private static Executor threadExecutor = Executors.newCachedThreadPool();
 
@@ -83,6 +86,8 @@ public class ReadBlitzActivity extends AppCompatActivity
 
                 dataStore = (DataStore) arguments.getSerializable(DataStore.class.getSimpleName());
                 document_name = arguments.getString("document_name");
+                blitz_name = arguments.getString("blitz_name");
+                this.setTitle(blitz_name);
             }
             MenuFiller.fillMenu(this, dataStore.getUserInfo());
 

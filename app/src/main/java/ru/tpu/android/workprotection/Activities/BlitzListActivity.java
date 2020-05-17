@@ -169,6 +169,7 @@ public class BlitzListActivity extends AppCompatActivity
                         Intent intent = new Intent(BlitzListActivity.this, ReadBlitzActivity.class);
                         intent.putExtra(DataStore.class.getSimpleName(), dataStore);
                         intent.putExtra("document_name", instructionBlitzInfo.getFiles()[numb]);
+                        intent.putExtra("blitz_name", instructionBlitzInfo.getNames()[numb]);
                         startActivity(intent);
                     }
                 });

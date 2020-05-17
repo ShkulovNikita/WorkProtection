@@ -167,6 +167,7 @@ public class TestsListActivity extends AppCompatActivity
                         intent.putExtra(DataStore.class.getSimpleName(), dataStore);
                         intent.putExtra("test_id", test_id);
                         intent.putExtra("test_info", testInfo);
+
                         //установление первоначального значения счетчика времени в 0
                         intent.putExtra("time", 0);
                         intent.putExtra("num", 0);
@@ -268,7 +269,6 @@ public class TestsListActivity extends AppCompatActivity
     //обращение к API для получения информации о выбранном тесте
     private void findTest() { threadExecutor.execute(infoTask); }
 
-    //нажатие на кнопку "назад" смартфона
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

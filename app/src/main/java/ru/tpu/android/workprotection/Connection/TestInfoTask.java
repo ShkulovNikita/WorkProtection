@@ -1,5 +1,7 @@
 package ru.tpu.android.workprotection.Connection;
 
+import android.os.Environment;
+
 import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
 
@@ -10,12 +12,20 @@ import com.google.gson.JsonParser;
 
 import org.json.JSONException;
 
+import java.io.BufferedInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLConnection;
+
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import ru.tpu.android.workprotection.Activities.AuthorizationActivity;
 import ru.tpu.android.workprotection.Activities.TestsListActivity;
+import ru.tpu.android.workprotection.Auxiliary.FilesDownloader;
 import ru.tpu.android.workprotection.Models.QuestionInfo;
 import ru.tpu.android.workprotection.Models.TestInfo;
 
@@ -67,7 +77,7 @@ public class TestInfoTask extends Task<TestInfo> {
     }
 
     //парсинг ответа
-    private TestInfo parseSearch(String response) throws JSONException {
+    private TestInfo parseSearch(String response) throws Exception {
         //удалить лишние символы из ответа от API
         response = editResponse(response);
 
@@ -147,10 +157,61 @@ public class TestInfoTask extends Task<TestInfo> {
 
                 //передача списка вопросов заданному тесту
                 testInfo.setQuestions(questionInfos);
+
+                //проход по вопросам, чтобы получить их файлы
+                for (int i = 0; i < testInfo.getQuestions().length; i++) {
+                    String filePath = getFile(testInfo, i);
+                    testInfo.getQuestions()[i].setFile(filePath);
+                }
             } catch (Exception ex) {
                 testInfo.setId("Произошла ошибка");
             }
         }
         return testInfo;
+    }
+
+    //получение файла для вопроса
+    private String getFile(TestInfo testInfo, int numb) {
+        try {
+            if (testInfo.getQuestions()[numb].getFile().equals("_")) {
+                return "_";
+            } else {
+                //получение и обработка имени файла
+                String fileName = testInfo.getQuestions()[numb].getFile();
+                fileName = FilesDownloader.deleteSpacesAndDots(fileName);
+
+                //установление соединения
+                URL url = new URL(AuthorizationActivity.CONNECTION_URL + "gettestfile/" + fileName);
+                URLConnection conexion = url.openConnection();
+                conexion.connect();
+
+                //потоки для получения и сохранения файла
+                InputStream input = new BufferedInputStream(url.openStream());
+                OutputStream output;
+
+                //возвращение имени файла к исходному виду
+                fileName = FilesDownloader.returnSpacesAndDots(fileName);
+
+                //место сохранения
+                output = new FileOutputStream(Environment
+                        .getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + fileName);
+
+                //передача файла из входного потока в выходной
+                FilesDownloader.saveFileFromStream(input, output);
+
+                //получение пути до сохраненного файла
+                String filePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + fileName;
+
+                //закрытие потоков
+                output.flush();
+                output.close();
+                input.close();
+
+                return filePath;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return "Произошла ошибка";
+        }
     }
 }

@@ -165,6 +165,7 @@ public class BriefingsListActivity extends AppCompatActivity
                         intent.putExtra(DataStore.class.getSimpleName(), dataStore);
                         intent.putExtra("briefing_id", briefingsInfo.getId()[numb]);
                         intent.putExtra("document_name", briefingsInfo.getDocuments()[numb]);
+                        intent.putExtra("briefing_name", briefingsInfo.getName()[numb]);
                         startActivity(intent);
                     }
                 });
