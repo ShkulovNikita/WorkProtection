@@ -16,7 +16,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import ru.tpu.android.workprotection.Activities.AuthorizationActivity;
 import ru.tpu.android.workprotection.Activities.ReadBlitzActivity;
-import ru.tpu.android.workprotection.Activities.ReadBriefingActivity;
 import ru.tpu.android.workprotection.Auxiliary.FilesDownloader;
 
 public class BlitzDownloadTask extends Task<String> {

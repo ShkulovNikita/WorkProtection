@@ -16,7 +16,6 @@ import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import ru.tpu.android.workprotection.Activities.AuthorizationActivity;
 import ru.tpu.android.workprotection.Models.BlitzInfo;
-import ru.tpu.android.workprotection.Models.BriefingsInfo;
 
 public class BlitzInfoTask extends Task<BlitzInfo> {
     private static OkHttpClient httpClient;

@@ -5,8 +5,6 @@ import android.view.Gravity;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import ru.tpu.android.workprotection.Activities.BriefingsListActivity;
-
 public class NotFound {
     static public void addNotFoundText (Context context, LinearLayout linearLayout) {
         TextView textView = new TextView(context);

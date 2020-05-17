@@ -18,9 +18,7 @@ import java.net.URL;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import ru.tpu.android.workprotection.Activities.AuthorizationActivity;
-import ru.tpu.android.workprotection.Activities.BriefingsListActivity;
 import ru.tpu.android.workprotection.Activities.ReadBriefingActivity;
-import ru.tpu.android.workprotection.Models.BriefingsInfo;
 
 public class SendBriefingTask extends Task<Void> {
     private static OkHttpClient httpClient;

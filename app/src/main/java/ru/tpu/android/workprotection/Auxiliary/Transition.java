@@ -3,7 +3,6 @@ package ru.tpu.android.workprotection.Auxiliary;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.widget.Toast;
 
 import ru.tpu.android.workprotection.Activities.AuthorizationActivity;

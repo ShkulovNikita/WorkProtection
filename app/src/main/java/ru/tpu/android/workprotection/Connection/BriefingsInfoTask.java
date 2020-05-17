@@ -17,7 +17,6 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import ru.tpu.android.workprotection.Activities.AuthorizationActivity;
 import ru.tpu.android.workprotection.Activities.BriefingsListActivity;
 import ru.tpu.android.workprotection.Models.BriefingsInfo;
-import ru.tpu.android.workprotection.Models.UserInfo;
 
 public class BriefingsInfoTask extends Task<BriefingsInfo> {
     private static OkHttpClient httpClient;

@@ -1,6 +1,5 @@
 package ru.tpu.android.workprotection.Activities;
 
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.Menu;
@@ -18,7 +17,6 @@ import com.google.android.material.navigation.NavigationView;
 
 import ru.tpu.android.workprotection.Auxiliary.MenuFiller;
 import ru.tpu.android.workprotection.Auxiliary.Permissions;
-import ru.tpu.android.workprotection.Auxiliary.TimeCounter;
 import ru.tpu.android.workprotection.Auxiliary.Transition;
 import ru.tpu.android.workprotection.Models.DataStore;
 import ru.tpu.android.workprotection.Models.TestInfo;
