@@ -40,6 +40,7 @@ import ru.tpu.android.workprotection.Connection.TestListInfoTask;
 import ru.tpu.android.workprotection.Models.DataStore;
 import ru.tpu.android.workprotection.Models.TestInfo;
 import ru.tpu.android.workprotection.Models.TestListInfo;
+import ru.tpu.android.workprotection.Models.TestStats;
 import ru.tpu.android.workprotection.R;
 
 public class TestsListActivity extends AppCompatActivity
@@ -167,6 +168,9 @@ public class TestsListActivity extends AppCompatActivity
                         intent.putExtra(DataStore.class.getSimpleName(), dataStore);
                         intent.putExtra("test_id", test_id);
                         intent.putExtra("test_info", testInfo);
+
+                        TestStats testStats = new TestStats();
+                        intent.putExtra(TestStats.class.getSimpleName(), testStats);
 
                         //установление первоначального значения счетчика времени в 0
                         intent.putExtra("time", 0);

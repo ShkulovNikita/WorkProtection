@@ -18,6 +18,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -40,6 +41,9 @@ public class TestInfoTask extends Task<TestInfo> {
                     HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor()
                             .setLevel(HttpLoggingInterceptor.Level.BASIC);
                     httpClient = new OkHttpClient.Builder()
+                            .connectTimeout(5, TimeUnit.MINUTES)
+                            .writeTimeout(5, TimeUnit.MINUTES)
+                            .readTimeout(5, TimeUnit.MINUTES)
                             .addInterceptor(loggingInterceptor)
                             .build();
                 }
@@ -183,6 +187,7 @@ public class TestInfoTask extends Task<TestInfo> {
                 //установление соединения
                 URL url = new URL(AuthorizationActivity.CONNECTION_URL + "gettestfile/" + fileName);
                 URLConnection conexion = url.openConnection();
+                conexion.setConnectTimeout(7000);
                 conexion.connect();
 
                 //потоки для получения и сохранения файла

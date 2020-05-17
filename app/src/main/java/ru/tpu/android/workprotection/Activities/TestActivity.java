@@ -31,8 +31,6 @@ import ru.tpu.android.workprotection.Auxiliary.MenuFiller;
 import ru.tpu.android.workprotection.Auxiliary.Permissions;
 import ru.tpu.android.workprotection.Auxiliary.TimeCounter;
 import ru.tpu.android.workprotection.Auxiliary.Transition;
-import ru.tpu.android.workprotection.Connection.TestInfoTask;
-import ru.tpu.android.workprotection.Connection.TestListInfoTask;
 import ru.tpu.android.workprotection.Models.DataStore;
 import ru.tpu.android.workprotection.Models.TestInfo;
 import ru.tpu.android.workprotection.Models.TestStats;
@@ -216,7 +214,7 @@ public class TestActivity extends AppCompatActivity
     }
 
     //проверка выбранного ответа
-    private void checkAnswers(View view) {
+    public void checkAnswers(View view) {
         try {
             //проверка количества ответов в вопросе
             if (testInfo.getQuestions()[number].getAnswers().length == 1) {
