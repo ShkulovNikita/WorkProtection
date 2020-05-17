@@ -15,6 +15,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import ru.tpu.android.workprotection.Activities.AuthorizationActivity;
+import ru.tpu.android.workprotection.Activities.TestsListActivity;
 import ru.tpu.android.workprotection.Models.QuestionInfo;
 import ru.tpu.android.workprotection.Models.TestInfo;
 
@@ -44,7 +45,7 @@ public class TestInfoTask extends Task<TestInfo> {
     @Override
     @WorkerThread
     protected TestInfo executeInBackground() throws Exception {
-        String response = search( AuthorizationActivity.CONNECTION_URL + "chosentest/"/* + AuthorizationActivity.userID TestListActivity.testID*/);
+        String response = search( AuthorizationActivity.CONNECTION_URL + "chosentest/" + TestsListActivity.test_id);
         return parseSearch(response);
     }
 

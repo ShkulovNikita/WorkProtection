@@ -35,8 +35,10 @@ import ru.tpu.android.workprotection.Auxiliary.Permissions;
 import ru.tpu.android.workprotection.Auxiliary.Transition;
 import ru.tpu.android.workprotection.Connection.Observer;
 import ru.tpu.android.workprotection.Connection.Task;
+import ru.tpu.android.workprotection.Connection.TestInfoTask;
 import ru.tpu.android.workprotection.Connection.TestListInfoTask;
 import ru.tpu.android.workprotection.Models.DataStore;
+import ru.tpu.android.workprotection.Models.TestInfo;
 import ru.tpu.android.workprotection.Models.TestListInfo;
 import ru.tpu.android.workprotection.R;
 
@@ -55,6 +57,13 @@ public class TestsListActivity extends AppCompatActivity
 
     //задача для выполнения поиска с помощью API
     private TestListInfoTask task;
+    private TestInfoTask infoTask;
+
+    //ID выбранного теста
+    public static String test_id;
+
+    //выбранный тест
+    public static TestInfo testInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +96,7 @@ public class TestsListActivity extends AppCompatActivity
             MenuFiller.fillMenu(this, dataStore.getUserInfo());
 
             task = new TestListInfoTask(observer);
+            infoTask = new TestInfoTask(testObserver);
             search();
         } catch (Exception ex) {
             //в случае ошибки - возвращение назад
@@ -98,6 +108,7 @@ public class TestsListActivity extends AppCompatActivity
 
     ProgressBar progressBar;
 
+    //обсервер получения списка тестов
     private Observer<TestListInfo> observer = new Observer<TestListInfo>() {
         @Override
         public void onLoading(@NonNull Task<TestListInfo> task) {
@@ -135,6 +146,48 @@ public class TestsListActivity extends AppCompatActivity
         }
     };
 
+    //обсервер получения информации о выбранном тесте
+    private Observer<TestInfo> testObserver = new Observer<TestInfo>() {
+        @Override
+        public void onLoading(@NonNull Task<TestInfo> task) {
+            progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        public void onSuccess(@NonNull Task<TestInfo> task, @Nullable TestInfo data) {
+            if ((dataStore != null)&&(data != null)) {
+                if (!data.getId().equals("Произошла ошибка")) {
+                    if (!data.getId().equals("Ничего не найдено")) {
+                        //данные получены корректно - сохранение
+                        testInfo = data;
+
+                        //переход к следующей активити
+                        Intent intent = new Intent(TestsListActivity.this, TestActivity.class);
+                        intent.putExtra(DataStore.class.getSimpleName(), dataStore);
+                        intent.putExtra("test_id", test_id);
+                        intent.putExtra("test_info", testInfo);
+                        //установление первоначального значения счетчика времени в 0
+                        intent.putExtra("time", 0);
+                        intent.putExtra("num", 0);
+                        startActivity(intent);
+                    } else {
+                        Transition.showErrorToast(TestsListActivity.this);
+                    }
+                } else {
+                    Transition.showErrorToast(TestsListActivity.this);
+                }
+            } else {
+                Transition.showErrorToast(TestsListActivity.this);
+            }
+        }
+
+        @Override
+        public void onError(@NonNull Task<TestInfo> task, @NonNull Exception e) {
+            progressBar.setVisibility(View.GONE);
+        }
+    };
+
     //отобразить список тестов
     public void showList (TestListInfo testListInfo) {
         Permissions.verifyStoragePermissions(this);
@@ -160,13 +213,13 @@ public class TestsListActivity extends AppCompatActivity
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(TestsListActivity.this, TestActivity.class);
-                        intent.putExtra(DataStore.class.getSimpleName(), dataStore);
-                        intent.putExtra("test_id", testsInformation.getId()[numb]);
-                        //установление первоначального значения счетчика времени в 0
-                        intent.putExtra("time", 0);
-                        intent.putExtra("num", 0);
-                        startActivity(intent);
+                        try {
+                            test_id = testsInformation.getId()[numb];
+                            findTest();
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                            Transition.showErrorToast(TestsListActivity.this);
+                        }
                     }
                 });
 
@@ -211,6 +264,9 @@ public class TestsListActivity extends AppCompatActivity
     private void search() {
         threadExecutor.execute(task);
     }
+
+    //обращение к API для получения информации о выбранном тесте
+    private void findTest() { threadExecutor.execute(infoTask); }
 
     //нажатие на кнопку "назад" смартфона
     @Override
