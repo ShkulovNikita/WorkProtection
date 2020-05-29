@@ -126,21 +126,22 @@ public class AuthorizationActivity extends AppCompatActivity {
     }
 
     //функция получения текста из поля ввода
-    public EditText getTextField () {
+    public EditText getTextField() {
         View view = findViewById(R.id.tabelNumText);
         return (EditText) view;
     }
 
     //проверяет, было ли выведено в поле "Неверный табельный номер"
-    public boolean checkEmptyness () {
+    public boolean checkEmptyness() {
         EditText editText = getTextField();
         String textOfField = editText.getText().toString();
-        if ((textOfField.equals("Неверный табельный номер"))||(textOfField.equals("Произошла ошибка"))) return true;
+        if ((textOfField.equals("Неверный табельный номер")) || (textOfField.equals("Произошла ошибка")))
+            return true;
         else return false;
     }
 
     //очищает поле ввода
-    public void clearTabelNumber () {
+    public void clearTabelNumber() {
         EditText editText = getTextField();
         String textOfField = editText.getText().toString();
         textOfField = "";
@@ -148,7 +149,7 @@ public class AuthorizationActivity extends AppCompatActivity {
     }
 
     //добавление одной цифры в соответствии с нажатой кнопкой
-    public void addNum (String num) {
+    public void addNum(String num) {
         EditText editText = getTextField();
         String textOfField = editText.getText().toString();
         textOfField = textOfField + num;
@@ -156,18 +157,14 @@ public class AuthorizationActivity extends AppCompatActivity {
     }
 
     //удаление последнего символа
-    public void deleteLastSymbol () {
+    public void deleteLastSymbol() {
         EditText editText = getTextField();
         String textOfField = editText.getText().toString();
 
-        if(textOfField.length()>0)
-        {
-            if ((textOfField.equals("Произошла ошибка"))||(textOfField.equals("Неверный табельный номер")))
-            {
+        if (textOfField.length() > 0) {
+            if ((textOfField.equals("Произошла ошибка")) || (textOfField.equals("Неверный табельный номер"))) {
                 textOfField = "";
-            }
-            else
-            {
+            } else {
                 textOfField = textOfField.substring(0, textOfField.length() - 1);
             }
         }
@@ -175,7 +172,7 @@ public class AuthorizationActivity extends AppCompatActivity {
     }
 
     //нажатие на кнопку очистки поля
-    public void onClickClearButton (View view) {
+    public void onClickClearButton(View view) {
         if (checkEmptyness()) {
             clearTabelNumber();
         }
@@ -183,70 +180,70 @@ public class AuthorizationActivity extends AppCompatActivity {
     }
 
     //нажатия на кнопки с цифрами
-    public void onClickNum1 (View view) {
+    public void onClickNum1(View view) {
         if (checkEmptyness()) {
             clearTabelNumber();
         }
         addNum("1");
     }
 
-    public void onClickNum2 (View view) {
+    public void onClickNum2(View view) {
         if (checkEmptyness()) {
             clearTabelNumber();
         }
         addNum("2");
     }
 
-    public void onClickNum3 (View view) {
+    public void onClickNum3(View view) {
         if (checkEmptyness()) {
             clearTabelNumber();
         }
         addNum("3");
     }
 
-    public void onClickNum4 (View view) {
+    public void onClickNum4(View view) {
         if (checkEmptyness()) {
             clearTabelNumber();
         }
         addNum("4");
     }
 
-    public void onClickNum5 (View view) {
+    public void onClickNum5(View view) {
         if (checkEmptyness()) {
             clearTabelNumber();
         }
         addNum("5");
     }
 
-    public void onClickNum6 (View view) {
+    public void onClickNum6(View view) {
         if (checkEmptyness()) {
             clearTabelNumber();
         }
         addNum("6");
     }
 
-    public void onClickNum7 (View view) {
+    public void onClickNum7(View view) {
         if (checkEmptyness()) {
             clearTabelNumber();
         }
         addNum("7");
     }
 
-    public void onClickNum8 (View view) {
+    public void onClickNum8(View view) {
         if (checkEmptyness()) {
             clearTabelNumber();
         }
         addNum("8");
     }
 
-    public void onClickNum9 (View view) {
+    public void onClickNum9(View view) {
         if (checkEmptyness()) {
             clearTabelNumber();
         }
         addNum("9");
     }
 
-    public void onClickNum0 (View view) {
+    public void onClickNum0(View view) {
         if (checkEmptyness()) {
             clearTabelNumber();
         }

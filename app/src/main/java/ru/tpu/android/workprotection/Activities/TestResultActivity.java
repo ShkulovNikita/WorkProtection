@@ -106,7 +106,13 @@ public class TestResultActivity extends AppCompatActivity
                 }
             }
 
-            resultText = resultText + "Прошло времени: " + count + "\n";
+            if (count < 60) {
+                resultText = resultText + "Прошло времени: " + count + " сек.\n";
+            } else {
+                int minutes = (int)Math.floor(count / 60);
+                int seconds = count % 60;
+                resultText = resultText + "Прошло времени:\n " + minutes + " мин. " + seconds + " сек.\n";
+            }
 
             textView.setText(resultText);
 

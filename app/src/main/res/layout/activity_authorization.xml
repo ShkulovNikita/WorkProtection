@@ -352,7 +352,7 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/white"
         android:indeterminate="true"
-        android:indeterminateTint="#1a09d6"
+        android:indeterminateTint="@color/colorPrimary"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
