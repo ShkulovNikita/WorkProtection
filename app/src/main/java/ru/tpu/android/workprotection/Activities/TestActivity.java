@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -157,6 +158,7 @@ public class TestActivity extends AppCompatActivity
         for (int i = 0; i<testInfo.getQuestions()[number].getAnswers().length;i++)
         {
             view = ltInflater.inflate(R.layout.test_answer, testPage, false);
+            view.setTag("answer" + i);
             TextView textView = view.findViewById(R.id.textViewTest);
             textView.setText(testInfo.getQuestions()[number].getAnswers()[i]);
 
@@ -268,12 +270,19 @@ public class TestActivity extends AppCompatActivity
                 for (int i = 0; i < testInfo.getQuestions()[number].getAnswers().length;i++) {
                     if (testInfo.getQuestions()[number].getAnswers_correctness()[i] > 0) {
                         corrAnswer = corrAnswer + testInfo.getQuestions()[number].getAnswers()[i] + "; ";
+                        View answer = testPage.findViewWithTag("answer" + i);
+                        answer.setBackgroundColor(Color.parseColor("#90EE90"));
+                    }
+                    else
+                    {
+                        View answer = testPage.findViewWithTag("answer" + i);
+                        answer.setBackgroundColor(Color.parseColor("#F08080"));
                     }
                 }
-                View correctAnswer = inflater.inflate(R.layout.test_correct_answer, testPage, false);
-                TextView textView = correctAnswer.findViewById(R.id.answerOfQuestion);
-                textView.setText(corrAnswer);
-                testPage.addView(correctAnswer);
+                //View correctAnswer = inflater.inflate(R.layout.test_correct_answer, testPage, false);
+                //TextView textView = correctAnswer.findViewById(R.id.answerOfQuestion);
+                //textView.setText(corrAnswer);
+                //testPage.addView(correctAnswer);
             }
 
             //перемотка скролла вниз, чтобы пользователь увидел правильный ответ

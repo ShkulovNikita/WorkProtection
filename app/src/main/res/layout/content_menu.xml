@@ -12,7 +12,11 @@
         android:height="70dp"
         android:width="220dp"
         android:text="@string/tests_button"
+        android:background="#1E90FF"
+        android:textColor="#FFFFFF"
         android:layout_centerInParent="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         android:onClick="onClickTests">
     </Button>
 
@@ -23,6 +27,8 @@
         android:height="70dp"
         android:width="220dp"
         android:text="@string/briefings_button"
+        android:background="#1E90FF"
+        android:textColor="#FFFFFF"
         android:layout_above="@id/tests_button"
         android:layout_alignLeft="@id/tests_button"
         android:onClick="onClickBriefings">
@@ -35,6 +41,8 @@
         android:height="70dp"
         android:width="220dp"
         android:text="@string/blitz_button"
+        android:background="#1E90FF"
+        android:textColor="#FFFFFF"
         android:layout_below="@id/tests_button"
         android:layout_alignLeft="@id/tests_button"
         android:onClick="onClickBlitz">

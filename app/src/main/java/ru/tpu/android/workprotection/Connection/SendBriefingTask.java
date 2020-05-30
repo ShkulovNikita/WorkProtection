@@ -47,7 +47,7 @@ public class SendBriefingTask extends Task<Void> {
     @WorkerThread
     protected Void executeInBackground() throws Exception {
         try {
-            executeRequest(AuthorizationActivity.CONNECTION_URL + "getresults/briefing", ReadBriefingActivity.REQUEST);
+            executeRequest(AuthorizationActivity.CONNECTION_URL + "getbriefingresult/briefing", ReadBriefingActivity.REQUEST);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
