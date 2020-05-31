@@ -37,7 +37,7 @@ import ru.tpu.android.workprotection.Connection.BriefingsInfoTask;
 import ru.tpu.android.workprotection.Connection.Observer;
 import ru.tpu.android.workprotection.Connection.Task;
 import ru.tpu.android.workprotection.Models.BriefingsInfo;
-import ru.tpu.android.workprotection.Models.DataStore;
+import ru.tpu.android.workprotection.Auxiliary.DataStore;
 import ru.tpu.android.workprotection.R;
 
 public class BriefingsListActivity extends AppCompatActivity

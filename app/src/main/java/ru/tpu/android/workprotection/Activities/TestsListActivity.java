@@ -37,7 +37,7 @@ import ru.tpu.android.workprotection.Connection.Observer;
 import ru.tpu.android.workprotection.Connection.Task;
 import ru.tpu.android.workprotection.Connection.TestInfoTask;
 import ru.tpu.android.workprotection.Connection.TestListInfoTask;
-import ru.tpu.android.workprotection.Models.DataStore;
+import ru.tpu.android.workprotection.Auxiliary.DataStore;
 import ru.tpu.android.workprotection.Models.TestInfo;
 import ru.tpu.android.workprotection.Models.TestListInfo;
 import ru.tpu.android.workprotection.Models.TestStats;

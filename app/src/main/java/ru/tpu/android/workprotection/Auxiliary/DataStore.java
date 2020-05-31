@@ -1,6 +1,11 @@
-package ru.tpu.android.workprotection.Models;
+package ru.tpu.android.workprotection.Auxiliary;
 
 import java.io.Serializable;
+
+import ru.tpu.android.workprotection.Models.BlitzInfo;
+import ru.tpu.android.workprotection.Models.BriefingsInfo;
+import ru.tpu.android.workprotection.Models.TestListInfo;
+import ru.tpu.android.workprotection.Models.UserInfo;
 
 /*класс, объекты которого используются для передачи данных между активити*/
 public class DataStore implements Serializable {

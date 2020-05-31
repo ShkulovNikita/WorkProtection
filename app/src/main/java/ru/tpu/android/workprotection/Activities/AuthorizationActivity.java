@@ -20,7 +20,7 @@ import ru.tpu.android.workprotection.Auxiliary.Transition;
 import ru.tpu.android.workprotection.Connection.Observer;
 import ru.tpu.android.workprotection.Connection.Task;
 import ru.tpu.android.workprotection.Connection.UserInfoTask;
-import ru.tpu.android.workprotection.Models.DataStore;
+import ru.tpu.android.workprotection.Auxiliary.DataStore;
 import ru.tpu.android.workprotection.Models.UserInfo;
 import ru.tpu.android.workprotection.R;
 

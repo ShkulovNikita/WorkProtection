@@ -18,7 +18,7 @@ import com.google.android.material.navigation.NavigationView;
 import ru.tpu.android.workprotection.Auxiliary.MenuFiller;
 import ru.tpu.android.workprotection.Auxiliary.Permissions;
 import ru.tpu.android.workprotection.Auxiliary.Transition;
-import ru.tpu.android.workprotection.Models.DataStore;
+import ru.tpu.android.workprotection.Auxiliary.DataStore;
 import ru.tpu.android.workprotection.Models.TestInfo;
 import ru.tpu.android.workprotection.Models.TestStats;
 import ru.tpu.android.workprotection.R;

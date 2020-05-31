@@ -89,7 +89,6 @@ public abstract class Task<T> implements Runnable {
                 dates[i] = dateObj;
             }
         }
-
         return dates;
     }
 }

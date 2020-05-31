@@ -7,7 +7,6 @@ import android.widget.Toast;
 
 import ru.tpu.android.workprotection.Activities.AuthorizationActivity;
 import ru.tpu.android.workprotection.Activities.MenuActivity;
-import ru.tpu.android.workprotection.Models.DataStore;
 
 //вспомогательный класс для выполнения общих переходов между активити
 public class Transition {
@@ -55,27 +54,6 @@ public class Transition {
                 if (error.equals("Произошла ошибка")) {
                     Transition.showErrorToast(context);
                 }
-            }
-        }
-    }
-
-    /*для отладки*/
-    static public void returnOnError(Context context, Class nextActivity, String error) {
-        Intent intent = new Intent(context, nextActivity);
-        intent.putExtra("Error", error);
-        context.startActivity(intent);
-    }
-
-    static public void showErrorToast(Context context, String errorText) {
-        Toast toast = Toast.makeText(context, errorText, Toast.LENGTH_SHORT);
-        toast.show();
-    }
-
-    static public void checkError(Context context, Bundle arguments, boolean flag) {
-        if (arguments!=null) {
-            String error = arguments.getString("Error");
-            if (error != null) {
-                    Transition.showErrorToast(context, error);
             }
         }
     }
